@@ -1,0 +1,7 @@
+.form {
+  display: flex;
+}
+
+.btn {
+  display: inline-flex;
+}
