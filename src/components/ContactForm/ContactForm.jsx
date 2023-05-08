@@ -15,6 +15,7 @@ export class ContactForm extends Component {
     //   при введении данных в инпут
     console.log(event.currentTarget.value);
     console.log(event.currentTarget.name);
+
     this.setState({ [event.currentTarget.name]: event.currentTarget.value });
   };
 
@@ -38,9 +39,10 @@ export class ContactForm extends Component {
   render() {
     return (
       <form className={css.form} onSubmit={this.handleSubmitForm}>
-        <label htmlFor={this.nameId}>
+        <label className={css.label} htmlFor={this.nameId}>
           Name
           <input
+            className={css.input}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -51,9 +53,10 @@ export class ContactForm extends Component {
             id={this.nameId}
           />
         </label>
-        <label htmlFor={this.numberId}>
+        <label className={css.label} htmlFor={this.numberId}>
           Number
           <input
+            className={css.input}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
