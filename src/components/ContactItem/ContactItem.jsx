@@ -1,4 +1,5 @@
 import css from 'components/ContactItem/ContactItem.module.css';
+import PropTypes from 'prop-types';
 
 export const ContactItem = ({ contact, onDeleteContact }) => {
   return (
@@ -16,4 +17,12 @@ export const ContactItem = ({ contact, onDeleteContact }) => {
       </button>
     </div>
   );
+};
+ContactItem.propTypes = {
+  contact: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+  }).isRequired,
+  onDeleteContact: PropTypes.func.isRequired,
 };

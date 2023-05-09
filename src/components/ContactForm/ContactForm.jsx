@@ -12,7 +12,7 @@ export class ContactForm extends Component {
   numberId = nanoid();
 
   handleChange = event => {
-    //   при введении данных в инпут
+    //   при введении данных в инпут записываем эти значения в качестве свойств и их значений в объекте
     console.log(event.currentTarget.value);
     console.log(event.currentTarget.name);
 
@@ -24,8 +24,8 @@ export class ContactForm extends Component {
     // console.log(event.currentTarget.name.value);
     event.preventDefault();
 
-    //   вызываем передаем данные при сабмите в Арр в качестве аргумента dataForm
-    // this.props.onSubmit(event.currentTarget.name);
+    //   вызываем и передаем данные при сабмите формы в Арр в качестве аргумента dataForm
+
     this.props.onSubmit(this.state);
     // console.log(event.currentTarget.name);
 

@@ -7,13 +7,7 @@ import css from 'components/App.module.css';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    // contacts: [],
+    contacts: [],
     filter: '',
   };
 
@@ -26,7 +20,12 @@ export class App extends Component {
       id: nanoid(),
     };
 
-    // добавляем этот объект в массив контактов
+    // если вводим имя контакта, какое уже есть в телеф.книге, выводим сообщение, что имя такое есть такое и выходим
+    if (this.state.contacts.find(contact => contact.name === dataForm.name)) {
+      alert(`${dataForm.name} is already in contacts.`);
+      return;
+    }
+    // добавляем этот объект нового контакта в массив контактов
     this.setState(prevState => {
       return {
         contacts: [...prevState.contacts, newData],
@@ -34,6 +33,7 @@ export class App extends Component {
     });
   };
 
+  // удаляем  контакт из списка контактов
   deleteContact = contactId => {
     console.log(contactId);
     this.setState(prevState => ({
@@ -43,16 +43,13 @@ export class App extends Component {
 
   handleFilter = event => {
     console.log(event.currentTarget.value);
-    // в свойсво объекта filter добавляем значение введенное в инпут для фильтра
+    // в свойсво filter объекта контакта добавляем значение введенное в инпут для фильтра
     this.setState({ filter: event.currentTarget.value });
   };
 
-  // changeContacts = constactsName => {
-  //   console.log(constactsName);
-
-  // };
-
   render() {
+    // записываем в отдельный массив контакты, которые отфильтровали для поиска из всех контактов по условию в инпуте
+    //  и записываем в качестве пропса для рендера списков контакта по условию, чтобы не менять исходный массив контактов
     const visibleTelephone = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
