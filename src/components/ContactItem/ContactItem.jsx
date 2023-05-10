@@ -2,15 +2,16 @@ import css from 'components/ContactItem/ContactItem.module.css';
 import PropTypes from 'prop-types';
 
 export const ContactItem = ({ contact, onDeleteContact }) => {
+  const { id, name, number } = contact;
   return (
     <div className={css.wrapper}>
-      <li className={css.item} key={contact.id}>
-        {contact.name}: {contact.number}
+      <li className={css.item} key={id}>
+        {name}: {number}
       </li>
       <button
         className={css.button}
         onClick={() => {
-          onDeleteContact(contact.id);
+          onDeleteContact(id);
         }}
       >
         Delete
@@ -20,7 +21,7 @@ export const ContactItem = ({ contact, onDeleteContact }) => {
 };
 ContactItem.propTypes = {
   contact: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     number: PropTypes.number.isRequired,
   }).isRequired,

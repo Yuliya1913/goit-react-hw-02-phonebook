@@ -12,19 +12,21 @@ export class App extends Component {
   };
 
   formSubmit = dataForm => {
-    console.log(dataForm);
-    // записываем пришедшие данные в новый объект со свойствами
-    let newData = {
-      name: dataForm.name,
-      number: dataForm.number,
-      id: nanoid(),
-    };
-
+    const isExist = this.state.contacts.find(
+      contact => contact.name.toLowerCase() === dataForm.name.toLowerCase()
+    );
     // если вводим имя контакта, какое уже есть в телеф.книге, выводим сообщение, что имя такое есть такое и выходим
-    if (this.state.contacts.find(contact => contact.name === dataForm.name)) {
+    if (isExist) {
       alert(`${dataForm.name} is already in contacts.`);
       return;
     }
+
+    // записываем пришедшие данные в новый объект со свойствами
+    const newData = {
+      ...dataForm,
+      id: nanoid(),
+    };
+
     // добавляем этот объект нового контакта в массив контактов
     this.setState(prevState => {
       return {
@@ -35,14 +37,12 @@ export class App extends Component {
 
   // удаляем  контакт из списка контактов
   deleteContact = contactId => {
-    console.log(contactId);
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
 
   handleFilter = event => {
-    console.log(event.currentTarget.value);
     // в свойсво filter объекта контакта добавляем значение введенное в инпут для фильтра
     this.setState({ filter: event.currentTarget.value });
   };
@@ -54,17 +54,24 @@ export class App extends Component {
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
 
-    console.log(visibleTelephone);
+    const isContacts = this.state.contacts.length > 0;
+
     return (
       <div className={css.container}>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.formSubmit} />
         <h2>Contacts</h2>
-        <Filter value={this.state.filter} onChange={this.handleFilter} />
-        <ContactsList
-          contacts={visibleTelephone}
-          onDeleteContact={this.deleteContact}
-        />
+
+        {isContacts && (
+          <Filter value={this.state.filter} onChange={this.handleFilter} />
+        )}
+
+        {isContacts && (
+          <ContactsList
+            contacts={visibleTelephone}
+            onDeleteContact={this.deleteContact}
+          />
+        )}
       </div>
     );
   }

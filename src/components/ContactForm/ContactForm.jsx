@@ -13,22 +13,18 @@ export class ContactForm extends Component {
 
   handleChange = event => {
     //   при введении данных в инпут записываем эти значения в качестве свойств и их значений в объекте
-    console.log(event.currentTarget.value);
-    console.log(event.currentTarget.name);
+    // console.log(event.currentTarget.value);
+    // console.log(event.currentTarget.name);
 
     this.setState({ [event.currentTarget.name]: event.currentTarget.value });
   };
 
   handleSubmitForm = event => {
-    // console.log(event.currentTarget.name.name);
-    // console.log(event.currentTarget.name.value);
     event.preventDefault();
 
     //   вызываем и передаем данные при сабмите формы в Арр в качестве аргумента dataForm
 
     this.props.onSubmit(this.state);
-    // console.log(event.currentTarget.name);
-
     this.reset();
   };
 
@@ -37,6 +33,8 @@ export class ContactForm extends Component {
   };
 
   render() {
+    const { name, number } = this.state;
+
     return (
       <form className={css.form} onSubmit={this.handleSubmitForm}>
         <label className={css.label} htmlFor={this.nameId}>
@@ -47,7 +45,7 @@ export class ContactForm extends Component {
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            value={this.state.name}
+            value={name}
             required
             onChange={this.handleChange}
             id={this.nameId}
@@ -62,7 +60,7 @@ export class ContactForm extends Component {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={this.state.number}
+            value={number}
             onChange={this.handleChange}
             id={this.numberId}
           />
